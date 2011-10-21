@@ -57,7 +57,7 @@
 	var VK = {
 		BASE_URL: "https://api.vkontakte.ru/method/",
 
-		APP_ID: 2649785,
+		APP_ID: 2652035,
 		SETTINGS: "notify,friends,photos,audio,video,docs,notes,pages,wall,groups",
 		REDIRECT_URI: "http://localhost.com",
 		DISPLAY: "popup",
