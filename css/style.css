@@ -887,6 +887,11 @@ body > article .photos .images li {
   height: 98px;
   width: 130px;
 }
+body > article .photos .images li img {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
 .lightbox {
   position: fixed;
   top: 0px;
