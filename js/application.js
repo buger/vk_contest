@@ -59,7 +59,7 @@
 
 		APP_ID: 2649785,
 		SETTINGS: "notify,friends,photos,audio,video,docs,notes,pages,wall,groups",
-		REDIRECT_URI: "http://localhost.com",
+		REDIRECT_URI: "http://localhost.com/vk_contest/",
 		DISPLAY: "popup",
 
 		SESSION: store.get('session') || {},		
@@ -499,7 +499,7 @@
 		logged: function(){
 			//Removing this state from history
 			if ('replaceState' in wnd.history)
-				wnd.history.replaceState({},"","/");
+				wnd.history.replaceState({},"","");
 
 			VK.SESSION = store.get('session');
 			this.navigate("/user/" + VK.SESSION.user_id);
