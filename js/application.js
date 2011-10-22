@@ -255,10 +255,9 @@
 				if (callback) callback(user);
 			});
 		}
-	}	
+	}		
 
-
-	if (wnd.location.hash.match(/access_token/)) {
+	if (wnd.location.hash.match(/access_token/)) {		
 		var hash = this.location.hash.substr(1).split('&');
 
 		var session = {}
@@ -273,13 +272,12 @@
 		store.set('session', session);
 		
 		wnd.opener.location.hash = "logged";
-		wnd.close();			
+		return wnd.close();			
 	}
 
 	if (wnd.location.hash.match(/error/)) {
-		wnd.close();
+		return wnd.close();
 	}
-	
 
 	$('#login_button').bind('click', function(){		
 		var url = ["http://api.vkontakte.ru/oauth/authorize?",			
@@ -728,18 +726,20 @@
 			if ('replaceState' in wnd.history)
 				wnd.history.replaceState({},"","");
 
-			VK.SESSION = store.get('session');
+			VK.SESSION = store.get('session');			
+
 			this.navigate("/user/" + VK.SESSION.user_id, true);
 		},
 
 
-		loadCurrentUser: function(){
-			if (VK.SESSION.access_token)
+		loadCurrentUser: function(){			
+			if (VK.SESSION.access_token) {
 				// Fixing history
 				if ('replaceState' in wnd.history)
 					wnd.history.replaceState({},"","#/user/"+VK.SESSION.user_id);
 
 				this.navigate("/user/" + VK.SESSION.user_id, true);
+			}
 		},
 
 		_loadUserCallback: function(user, callback) {
@@ -760,7 +760,7 @@
 
 		loadUser: function(user_id, callback){			
 			if (!VK.SESSION.user_id) return;
-							
+
 			App.opened_user = parseInt(user_id);			
 
 			document.body.className += " loading";
