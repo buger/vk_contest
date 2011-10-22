@@ -567,10 +567,13 @@ body > article aside .term .count {
 body > article > section {
   width: auto;
   background-color: white;
+  border-left: 1px solid #dadada;
+  border-right: 1px solid #e6e6e6;
+  margin-left: 242px;
+}
+body > article .profile {
   padding: 20px 20px;
   border: 1px solid #eee;
-  border-left: 1px solid #dadada;
-  margin-left: 242px;
 }
 body > article .profile > .info {
   padding: 4px;
@@ -755,13 +758,33 @@ body > article .profile .wall .post article p {
   line-height: 150%;
   padding-top: 4px;
 }
-body > article .profile .wall .post article .attachment {
+body > article .profile .wall .post article .attachments {
   margin: 10px 0px;
 }
-body > article .profile .wall .post article .attachment img {
+body > article .profile .wall .post article .attachments li {
+  position: relative;
+}
+body > article .profile .wall .post article .attachments li img {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
+}
+body > article .profile .wall .post article .attachments li.link {
+  zoom: 1;
+}
+body > article .profile .wall .post article .attachments li.link:before, body > article .profile .wall .post article .attachments li.link:after {
+  display: table;
+  content: "";
+  zoom: 1;
+  *display: inline;
+}
+body > article .profile .wall .post article .attachments li.link:after {
+  clear: both;
+}
+body > article .profile .wall .post article .attachments li.link img {
+  float: left;
+  margin-right: 10px;
+  max-height: 80px;
 }
 body > article .profile .wall .post article .info {
   margin-top: 2px;
@@ -824,4 +847,91 @@ body > article .profile .wall .post .show_all {
   font-weight: bold;
   color: #999;
   font-size: 11px;
+}
+body > article .photos header {
+  padding: 22px 20px;
+  border-bottom: 1px solid #e6e6e6;
+  background-color: #ededed;
+  background-repeat: repeat-x;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#f7f7f7), to(#ededed));
+  background-image: -moz-linear-gradient(top, #f7f7f7, #ededed);
+  background-image: -ms-linear-gradient(top, #f7f7f7, #ededed);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f7f7f7), color-stop(100%, #ededed));
+  background-image: -webkit-linear-gradient(top, #f7f7f7, #ededed);
+  background-image: -o-linear-gradient(top, #f7f7f7, #ededed);
+  background-image: linear-gradient(top, #f7f7f7, #ededed);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7f7f7', endColorstr='#ededed', GradientType=0);
+}
+body > article .photos .images {
+  zoom: 1;
+  margin: 20px;
+}
+body > article .photos .images:before, body > article .photos .images:after {
+  display: table;
+  content: "";
+  zoom: 1;
+  *display: inline;
+}
+body > article .photos .images:after {
+  clear: both;
+}
+body > article .photos .images li {
+  float: left;
+  margin: 18px 8px;
+  text-align: center;
+  background-color: #f1f1f1;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  overflow: hidden;
+  height: 98px;
+  width: 130px;
+}
+.lightbox {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+.lightbox .back, .lightbox .close {
+  color: white;
+  filter: alpha(opacity=70);
+  -khtml-opacity: 0.7;
+  -moz-opacity: 0.7;
+  opacity: 0.7;
+  position: absolute;
+  top: 60px;
+  font-size: 28px;
+  font-weight: bold;
+}
+.lightbox .back:hover, .lightbox .close:hover {
+  text-decoration: none;
+  filter: alpha(opacity=90);
+  -khtml-opacity: 0.9;
+  -moz-opacity: 0.9;
+  opacity: 0.9;
+}
+.lightbox .close {
+  right: 30px;
+}
+.lightbox .back {
+  left: 30px;
+}
+.lightbox .window {
+  margin: 0 auto;
+  margin-top: 30px;
+  width: 1px;
+  padding: 20px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background: white;
+}
+.lightbox .window img {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
 }
