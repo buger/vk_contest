@@ -534,6 +534,6 @@
 	});
 
 	new AppRouter();
-	Backbone.history.start();
+	Backbone.history.start({ root: "/vk_contest" });
 
 }).apply(this)
