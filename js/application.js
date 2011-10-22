@@ -499,7 +499,7 @@
 		logged: function(){
 			//Removing this state from history
 			if ('replaceState' in wnd.history)
-				wnd.history.replaceState({},"","/");
+				wnd.history.replaceState({},"","");
 
 			VK.SESSION = store.get('session');
 			this.navigate("/user/" + VK.SESSION.user_id);
