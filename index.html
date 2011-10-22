@@ -19,7 +19,7 @@
 	<nav>
 		<div>
 			<div class="logo">
-				<a href="#"></a>
+				<a href="#">&nbsp;</a>
 			</div>
 			<div class="actions">
 				<a href="#">Newsfeed</a>
@@ -93,12 +93,12 @@
 			</script>
 		</aside>
 
-		<section class="profile">
+		<section class="profile" style="display: none">
 			<script type="text/template" id="user_profile_template">
 				<div class="info">
 					{{#user}}
 					<h1 itemprop="name">{{full_name}}</h1>
-					<div class="quote">{{activity}}</div>
+					<div class="quote">{{{activity}}}</div>
 
 					<ul>
 						{{#birthday}}
@@ -133,8 +133,8 @@
 				<ul class="images">
 					{{#user_photos}}
 					<li>
-						<a href="#/user/{{user.id}}/photos/{{pid}}">
-							<img src="{{src}}"/>
+						<a data-src="{{src_big}}" data-photo="{{pid}}">
+							<img src="{{src}}" />
 						</a>
 					</li>
 					{{/user_photos}}
@@ -147,6 +147,29 @@
 
 				<div class="wall"></div>
 			</script>			
+		</section>
+
+		<section class="photos" style="display: none">
+			<script type="text/template" id="user_photos_template">
+				<header>
+					<a class="btn back"><b><</b>Back to Profile</a>
+
+					<span>{{photos_count}}</span>
+					<span class='devider'>|</span>
+					<a>{{albums_count}}</a>
+				</header>
+				<ul class="images" data-count="4">
+					{{#user_photos}}
+					<li>
+						{{^is_stub}}
+						<a data-src="{{src_big}}" data-photo="{{pid}}">
+							<img src="{{src}}"/>
+						</a>
+						{{/is_stub}}
+					</li>
+					{{/user_photos}}
+				</ul>
+			</script>
 		</section>
 	</article>
 
@@ -169,9 +192,11 @@
 				<p>{{{text}}}</p>
 				
 				{{#has_attachment}}
-				<div class="attachment">
-					{{#attachments}} {{{attachment_preview}}} {{/attachments}}
-				</div>
+				<ul class="attachments">
+					{{#attachments}}
+						<li class="{{type}}">{{{attachment_preview}}}</li>
+					{{/attachments}}
+				</ul>
 				{{/has_attachment}}
 
 				<div class="info">
@@ -198,6 +223,6 @@
 	<script type="text/javascript" src="js/backbone.min.js"></script>
 	<script type="text/javascript" src="js/mustache.js"></script>
 
-	<script type="text/javascript" src="js/application.js?1"></script>
+	<script type="text/javascript" src="js/application.js?2"></script>
 </body>
 </html>
