@@ -3,12 +3,12 @@ NETWORK:
 *
 
 CACHE:
-#rev 5
-/style.css
-/js/background_noise.js
-/js/ender.min.js
-/js/store.js
-/js/underscore.min.js
-/js/backbone.min.js
-/js/mustache.js
-/js/application.js
+#rev 6
+style.css
+js/background_noise.js
+js/ender.min.js
+js/store.js
+js/underscore.min.js
+js/backbone.min.js
+js/mustache.js
+js/application.js
