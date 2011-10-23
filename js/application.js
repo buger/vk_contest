@@ -372,8 +372,10 @@
 				},
 				
 				'attachment_preview': function(){	
-					var tmpl = "";
+					var tmpl = "", src;
 					var att = this[this.type];
+					att.type = this.type;
+					att.id = att.vid || att.pid;
 					
 					switch (this.type) {
 						case 'photo':
@@ -381,7 +383,7 @@
 						case 'app':
 						case 'posted_photo':
 							att.preview = att.image_small || att.src;
-							tmpl = '<a href="#" class="{{type}}"><img src="{{preview}}"" /></a>';
+							tmpl = '<a class="{{type}}" data-src="{{src_big}}" data-{{type}}="{{id}}" data-owner-id="{{owner_id}}"><img src="{{preview}}"" /></a>';
 							break;
 
 						case 'link':
@@ -583,7 +585,7 @@
 					
 					var offset = this.model.get('wall').length;
 
-					VK.loadWall(user.id, offset, _.bind(function(user){
+					VK.loadWall(this.model.id, offset, _.bind(function(user){
 						this.wall.render(user);
 						
 						if (callback) callback();
@@ -696,11 +698,19 @@
 			this.currentIndex = _.indexOf(this.context, this.activeElement.get(0));
 
 			var view = {
-				'current_index': this.currentIndex,
-				'elements_count': this.elementsCount
-			}			
-			
-			view.content = "<img src='"+$(this.activeElement).attr('data-src')+"'/>";
+				'current_index': this.currentIndex + 1,
+				'elements_count': this.elementsCount,
+
+				'is_photo': this.activeElement.attr('data-photo') != void 0,
+				'is_video': this.activeElement.attr('data-video') != void 0,
+
+				'photo': this.activeElement.attr('data-photo'),
+				'video': this.activeElement.attr('data-video'),
+
+				'src': this.activeElement.attr('data-src'),
+				
+				'owner_id': this.activeElement.attr('data-owner-id')
+			}
 
 			this.el.innerHTML = $.mustache(this.template, view);
 			
@@ -716,9 +726,7 @@
 		},
 
 		
-		previous: function(){		
-			console.log((this.currentIndex - 1));
-			
+		previous: function(){					
 			if ((this.currentIndex - 1) >= 0) {
 				this.activeElement = $(this.context[this.currentIndex-1]);
 				this.render()
@@ -759,7 +767,7 @@
 		el: document.body,				
 
 		events: {
-			"click a[data-photo]": 'openPhoto'
+			"click a[data-photo], a[data-video]": 'openPhoto'
 		},
 
 		

@@ -222,9 +222,16 @@
 		<a class='back' title="Back">◄</a>
 		<a class='close' title="Close">×</a>
 		<span class='window'>
-			<div class='content'>{{{content}}}</div>
-			<div class='info'>
-				Photo {{current_index}} of {{elements_count}}
+			<span class='content'>
+			{{#is_photo}}
+				<img src='{{src}}' />				
+			{{/is_photo}}
+			{{#is_video}}
+				<iframe src="http://vkontakte.ru/video_ext.php?oid={{owner_id}}&id={{video}}&hash=4734447340036429&hd=1" width="607" height="360" frameborder="0"></iframe>
+			{{/is_video}}
+			</span>
+			<div class="info">
+				<span>Photo {{current_index}} of {{elements_count}}</span>
 			</div>
 		</span>
 	</script>
@@ -237,6 +244,6 @@
 	<script type="text/javascript" src="js/backbone.min.js"></script>
 	<script type="text/javascript" src="js/mustache.js"></script>
 
-	<script type="text/javascript" src="js/application.js?4"></script>
+	<script type="text/javascript" src="js/application.js?5"></script>
 </body>
 </html>
