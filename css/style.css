@@ -460,7 +460,9 @@ body > article:after {
 body > article aside {
   width: 200px;
   min-height: 400px;
-  float: left;
+  position: absolute;
+  top: 0px;
+  left: 0px;
   padding: 20px 22px;
   padding-right: 20px;
   background-color: #eee;
@@ -489,18 +491,18 @@ body > article aside .buttons .btn {
 body > article aside .buttons .btn.primary {
   margin-bottom: 10px;
 }
-body > article aside nav, body > article aside .friends, body > article aside .followers {
+body > article aside > nav, body > article aside .friends, body > article aside .followers {
   padding-top: 8px;
   margin-bottom: 8px;
 }
-body > article aside nav .user_list, body > article aside .friends .user_list, body > article aside .followers .user_list {
+body > article aside > nav .user_list, body > article aside .friends .user_list, body > article aside .followers .user_list {
   margin: 0 auto;
   zoom: 1;
 }
-body > article aside nav .user_list:before,
+body > article aside > nav .user_list:before,
 body > article aside .friends .user_list:before,
 body > article aside .followers .user_list:before,
-body > article aside nav .user_list:after,
+body > article aside > nav .user_list:after,
 body > article aside .friends .user_list:after,
 body > article aside .followers .user_list:after {
   display: table;
@@ -508,27 +510,27 @@ body > article aside .followers .user_list:after {
   zoom: 1;
   *display: inline;
 }
-body > article aside nav .user_list:after, body > article aside .friends .user_list:after, body > article aside .followers .user_list:after {
+body > article aside > nav .user_list:after, body > article aside .friends .user_list:after, body > article aside .followers .user_list:after {
   clear: both;
 }
-body > article aside nav .user_list a, body > article aside .friends .user_list a, body > article aside .followers .user_list a {
+body > article aside > nav .user_list a, body > article aside .friends .user_list a, body > article aside .followers .user_list a {
   padding: 6px 7px;
   padding-left: 8px;
   display: inline-block;
   float: left;
   width: 51px;
 }
-body > article aside nav .user_list a:hover, body > article aside .friends .user_list a:hover, body > article aside .followers .user_list a:hover {
+body > article aside > nav .user_list a:hover, body > article aside .friends .user_list a:hover, body > article aside .followers .user_list a:hover {
   text-decoration: underline;
 }
-body > article aside nav .user_list a img, body > article aside .friends .user_list a img, body > article aside .followers .user_list a img {
+body > article aside > nav .user_list a img, body > article aside .friends .user_list a img, body > article aside .followers .user_list a img {
   height: 50px;
   width: 50px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
 }
-body > article aside nav .user_list a span, body > article aside .friends .user_list a span, body > article aside .followers .user_list a span {
+body > article aside > nav .user_list a span, body > article aside .friends .user_list a span, body > article aside .followers .user_list a span {
   display: block;
   padding-top: 5px;
   text-align: center;
@@ -536,7 +538,7 @@ body > article aside nav .user_list a span, body > article aside .friends .user_
   color: #0064cd;
   margin-left: -2px;
 }
-body > article aside nav {
+body > article aside > nav {
   border-top: 1px solid #dedede;
 }
 body > article aside .friends {
@@ -762,6 +764,8 @@ body > article .profile .wall .post article .attachments {
   margin: 10px 0px;
 }
 body > article .profile .wall .post article .attachments li {
+  font-family: arial;
+  font-size: 13px;
   position: relative;
 }
 body > article .profile .wall .post article .attachments li img {
@@ -898,37 +902,45 @@ body > article .photos .images li img {
   left: 0px;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+  text-align: center;
+  background: rgba(0, 0, 0, 0.7);
   z-index: 1;
 }
 .lightbox .back, .lightbox .close {
   color: white;
-  filter: alpha(opacity=70);
-  -khtml-opacity: 0.7;
-  -moz-opacity: 0.7;
-  opacity: 0.7;
   position: absolute;
-  top: 60px;
-  font-size: 28px;
+  top: 65px;
+  font-size: 35px;
   font-weight: bold;
+  -webkit-transition: 0.1s linear all;
+  -moz-transition: 0.1s linear all;
+  -ms-transition: 0.1s linear all;
+  -o-transition: 0.1s linear all;
+  transition: 0.1s linear all;
+  font-family: arial;
+  filter: alpha(opacity=50);
+  -khtml-opacity: 0.5;
+  -moz-opacity: 0.5;
+  opacity: 0.5;
 }
 .lightbox .back:hover, .lightbox .close:hover {
   text-decoration: none;
-  filter: alpha(opacity=90);
-  -khtml-opacity: 0.9;
-  -moz-opacity: 0.9;
-  opacity: 0.9;
+  filter: alpha(opacity=100);
+  -khtml-opacity: 1;
+  -moz-opacity: 1;
+  opacity: 1;
 }
 .lightbox .close {
   right: 30px;
 }
 .lightbox .back {
   left: 30px;
+  font-size: 28px;
 }
 .lightbox .window {
-  margin: 0 auto;
+  display: inline-block;
+  position: relative;
   margin-top: 30px;
-  width: 1px;
   padding: 20px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;

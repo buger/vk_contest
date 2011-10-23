@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" manifest="cache.manifest">
 <head>
 	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="edge" >
+
 	<title>Vkontakte</title>
 
 	<link rel="stylesheet" href="css/style.css" />	
@@ -139,6 +141,7 @@
 					</li>
 					{{/user_photos}}
 				</ul>
+				<div style="clear:both"></div>
 				{{/have_photos}}
 
 				<div class="well new_message">
@@ -158,7 +161,7 @@
 					<span class='devider'>|</span>
 					<a>{{albums_count}}</a>
 				</header>
-				<ul class="images" data-count="4">
+				<ul class="images" data-count="{{photos_count}}">
 					{{#user_photos}}
 					<li>
 						{{^is_stub}}
@@ -178,51 +181,69 @@
 	<button id="login_button" style="position: fixed; top: 300px;">Войти</button>		
 
 	<script type="text/template" id="user_wall_template">
-	{{#posts}}
-		<div class="post">					
-		{{#messages}}
-			<article {{^date}}class="stub"{{/date}}>
-				{{#user_comment}}
-				<a href="#/user/{{id}}" class="user_image">
-					<img src="{{photo}}" />
-				</a>				
-				<a href="#/user/{{id}}" class="author">{{full_name}}</a>
-				{{/user_comment}}
+		{{#posts}}
+			<div class="post">					
+			{{#messages}}
+				<article {{^date}}class="stub"{{/date}}>
+					{{#user_comment}}
+					<a href="#/user/{{id}}" class="user_image">
+						<img src="{{photo}}" />
+					</a>				
+					<a href="#/user/{{id}}" class="author">{{full_name}}</a>
+					{{/user_comment}}
 
-				<p>{{{text}}}</p>
-				
-				{{#has_attachment}}
-				<ul class="attachments">
-					{{#attachments}}
-						<li class="{{type}}">{{{attachment_preview}}}</li>
-					{{/attachments}}
-				</ul>
-				{{/has_attachment}}
+					<p>{{{text}}}</p>
+					
+					{{#has_attachment}}
+					<ul class="attachments">
+						{{#attachments}}
+							<li class="{{type}}">{{{attachment_preview}}}</li>
+						{{/attachments}}
+					</ul>
+					{{/has_attachment}}
 
-				<div class="info">
-					<span class="time">{{formated_date}}</span>
-					<a class="favorite count_{{likes_count}}" href="#">{{likes_count}}</a>
-				</div>
-			</article>
-						
-			{{#is_closed}}
-				{{#more_then_three_comments}}			
-					<a class="well show_all" data-post="{{to_id}}_{{id}}">Show all {{comments.count}} replies</a>
-				{{/more_then_three_comments}}
-			{{/is_closed}}
-		{{/messages}}
-		</div>
-	{{/posts}}
+					<div class="info">
+						<span class="time">{{formated_date}}</span>
+						<a class="favorite count_{{likes_count}}" href="#">{{likes_count}}</a>
+					</div>
+				</article>
+							
+				{{#is_closed}}
+					{{#more_then_three_comments}}			
+						<a class="well show_all" data-post="{{to_id}}_{{id}}">Show all {{comments.count}} replies</a>
+					{{/more_then_three_comments}}
+				{{/is_closed}}
+			{{/messages}}
+			</div>
+		{{/posts}}
 	</script>
 
-	<script type="text/javascript" src="js/background_noise.js"></script>
+	<script type="text/template" id="lightbox_template">
+		<a class='back' title="Back">◄</a>
+		<a class='close' title="Close">×</a>
+		<span class='window'>
+			<span class='content'>
+			{{#is_photo}}
+				<img src='{{src}}' />				
+			{{/is_photo}}
+			{{#is_video}}
+				<iframe src="http://vkontakte.ru/video_ext.php?oid={{owner_id}}&id={{video}}&hash=4734447340036429&hd=1" width="607" height="360" frameborder="0"></iframe>
+			{{/is_video}}
+			</span>
+			<div class="info">
+				<span>Photo {{current_index}} of {{elements_count}}</span>
+			</div>
+		</span>
+	</script>
 
+
+	<script type="text/javascript" src="js/background_noise.js"></script>
 	<script type="text/javascript" src="js/ender.min.js"></script>
 	<script type="text/javascript" src="js/store.js"></script>
 	<script type="text/javascript" src="js/underscore.min.js"></script>
 	<script type="text/javascript" src="js/backbone.min.js"></script>
 	<script type="text/javascript" src="js/mustache.js"></script>
 
-	<script type="text/javascript" src="js/application.js?3"></script>
+	<script type="text/javascript" src="js/application.js?5"></script>
 </body>
 </html>
