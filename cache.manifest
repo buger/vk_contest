@@ -3,8 +3,8 @@ NETWORK:
 *
 
 CACHE:
-#rev 6
-style.css
+#rev 7
+css/style.css
 js/background_noise.js
 js/ender.min.js
 js/store.js
