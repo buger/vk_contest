@@ -378,23 +378,23 @@
 					switch (this.type) {
 						case 'photo':
 						case 'video':
+						case 'app':
+						case 'posted_photo':
 							att.preview = att.image_small || att.src;
 							tmpl = '<a href="#" class="{{type}}"><img src="{{preview}}"" /></a>';
 							break;
 
 						case 'link':
 							tmpl = '{{#image_src}}<img src="{{image_src}}"/>{{/image_src}}' +
-								   '<a href="{{url}}" title="{{title}}">{{title}}</a>' +
-								   '<div>{{description}}</div></a>';
+								   '<a href="{{url}}" target="_blank" title="{{title}}">{{title}}</a>' +
+								   '<div>{{{description}}}</div></a>';
 							break;
 						
 						case 'audio':
 							tmpl = '<a>{{performer}} - {{title}}</a>';
 							break;
 					}
-					
-					console.log(this, this.type, tmpl);
-									
+														
 					return $.mustache(tmpl, att);
 				},
 
@@ -402,7 +402,7 @@
 					return this.comments && this.comments.count > 3;
 				},
 
-				'is_closed': function(){					
+				'is_closed': function(){
 					return !this.opened;
 				},
 				
@@ -569,8 +569,11 @@
 
 
 		// http://documentcloud.github.com/underscore/#throttle		
-		loadMore: _.throttle(function(evt, force){
+		loadMore: _.throttle(function(force, callback){
 			var scroll_height = wnd.scrollY + wnd.innerHeight;
+
+			// First argument can be event
+			if (typeof force != "boolean") force = false;
 
 			if (force || ($(wnd.document.body).height() - scroll_height) < wnd.innerHeight) {
 				if (this.mode === 'profile') {
@@ -582,6 +585,8 @@
 
 					VK.loadWall(user.id, offset, _.bind(function(user){
 						this.wall.render(user);
+						
+						if (callback) callback();
 					}, this));
 				} else {					
 					// If photos completly loaded
@@ -590,8 +595,10 @@
 
 					var offset = this.model.get('photos').length;
 
-					VK.loadUserPhotos(user.id, offset, _.bind(function(user){
+					VK.loadUserPhotos(this.model.id, offset, _.bind(function(user){
 						this.renderPhotos(user);
+
+						if (callback) callback();
 					}, this));
 				}
 			}
@@ -652,24 +659,96 @@
 	});
 
 
-	var PhotoViewer = Backbone.View.extend({
+	var Lightbox = Backbone.View.extend({
+
+		template: $('#lightbox_template').html(),
 
 		className: 'lightbox',
+
+		events: {
+			'click': 'close',
+			'click .content': 'next',
+			'click .back': 'previous'
+		},
 		
 
-		initialize: function(start_element){
+		initialize: function(){
+			if (this.options.source.nodeName === 'IMG')
+				this.options.source = this.options.source.parentNode;
+			
+			// This should be our photo contaiter
+			this.activeElement = $(this.options.source);
+			this.parentEl = $(this.activeElement).closest('ul');			
+			this.context = this.parentEl.find('a[data-photo]');
+
+			this.elementsCount = this.parentEl.attr('data-count') || this.context.length;
+			this.elementsCount = parseInt(this.elementsCount);
+
 			this.render();
+
+			document.body.appendChild(this.el);
 		},
 
 		
 		render: function(){
-			var tmpl = "<a class='back'><</a>"+
-					   "<a class='close'>X</a>"+
-					   "<div class='window'></div>";
+			if (!this.activeElement) return;
 
-			this.el.innerHTML = tmpl;
+			this.currentIndex = _.indexOf(this.context, this.activeElement.get(0));
 
-			document.body.appendChild(this.el);
+			var view = {
+				'current_index': this.currentIndex,
+				'elements_count': this.elementsCount
+			}			
+			
+			view.content = "<img src='"+$(this.activeElement).attr('data-src')+"'/>";
+
+			this.el.innerHTML = $.mustache(this.template, view);
+			
+			this.prefetchNext();
+		},
+		
+
+		next: function(){
+			if ((this.currentIndex + 1) < this.elementsCount) {
+				this.activeElement = $(this.context[this.currentIndex+1]);
+				this.render()
+			}
+		},
+
+		
+		previous: function(){		
+			console.log((this.currentIndex - 1));
+			
+			if ((this.currentIndex - 1) >= 0) {
+				this.activeElement = $(this.context[this.currentIndex-1]);
+				this.render()
+			}
+		},		
+
+
+		prefetchNext: function(){
+			if ((this.currentIndex + 1) < this.elementsCount) {
+				var img = new Image();
+				img.src = $(this.context[this.currentIndex+1]).attr('data-src');
+
+				// Just like when we scrolling page, we must preload user photos, if their still uncached.
+				if ( this.elementsCount && 
+					 App.content.mode === 'photos' &&
+					(this.currentIndex + 5) < this.elementsCount && 
+					!this.context[this.currentIndex + 5]) 
+				{							 
+					 App.content.loadMore(true, _.bind(function(){
+					 	this.context = this.parentEl.find('a[data-photo]');
+					 }, this));
+				}
+			}
+		},
+
+
+		close: function(evt){
+			if (evt.target === this.el || evt.target.className === 'close') {
+				document.body.removeChild(this.el);
+			}
 		}
 
 	});
@@ -687,7 +766,7 @@
 		initialize: function(){
 			this.content = new ProfileView();
 			this.sidebar = new SidebarView();
-	
+
 			this.render();
 		},
 			
@@ -702,8 +781,8 @@
 			$('body > nav .logo a').html(full_name);
 		},
 
-		openPhoto: function(evt){
-			new PhotoViewer(evt.target);
+		openPhoto: function(evt){	
+			new Lightbox({ source: evt.target });
 		}
 
 	});
@@ -746,7 +825,7 @@
 			// Turn off loading state
 			document.body.className = "";
 
-			if (App.opened_user == VK.SESSION.user_id) 
+			if (App.opened_user === VK.SESSION.user_id) 
 				App.render();
 
 			if (callback) { 
@@ -766,8 +845,7 @@
 			document.body.className += " loading";
 
 			// Loading from Cache to speedup UI. Uppdating data in background
-			var cached_user = Users.get(user_id);						
-
+			var cached_user = Users.get(user_id);
 			if (cached_user && cached_user.get('counters')) {
 				this._loadUserCallback(cached_user, callback);
 			}
