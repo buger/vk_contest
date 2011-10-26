@@ -18,7 +18,7 @@
 	<![endif]-->
 </head>
 <body class="not_logged">
-	<button id="login_button" style="display:none">Войти Вконтакте</button>
+	<a class="btn primary" id="login_button" style="display:none">Войти Вконтакте</a>
 
 	<nav>
 		<div>
@@ -26,9 +26,9 @@
 				<a href="#">&nbsp;</a>
 			</div>
 			<div class="actions">
-				<a href="#">Newsfeed</a>
-				<a href="#">Feedback</a>
-				<a href="#">Messages</a>
+				<a>Newsfeed</a>
+				<a>Feedback</a>
+				<a>Messages</a>
 			</div>
 
 			<input type="text" id="search" placeholder="Search..." />
@@ -49,9 +49,9 @@
 				{{/logged_user}}
 
 				{{#show_navigation}}
-				<nav>										
+				<nav>
 					{{#navigation}}
-					<a href="#/user/{{user.id}}{{url}}" class="term">
+					<a href="#/user/{{user.id}}/{{type}}" class="term {{type}} {{#is_active_nav}} active {{/is_active_nav}}">
 						<span>{{name}}</span>
 						<div class="count">{{count}}</div>
 					</a>					
@@ -61,7 +61,7 @@
 
 				{{#show_friends}}
 				<div class="friends">
-					<a href="#" class="term">
+					<a class="term">
 						<span>Friends</span>
 						<div class="count">{{user.counters.friends}}</div>
 					</a>
@@ -79,7 +79,7 @@
 
 				{{#show_followers}}
 				<div class="followers">
-					<a href="#" class="term">
+					<a class="term">
 						<span>Followers</span>
 						<div class="count">{{user.counters.followers}}</div>
 					</a>
@@ -204,7 +204,7 @@
 
 					<div class="info">
 						<span class="time">{{formated_date}}</span>
-						<a class="favorite count_{{likes_count}}" href="#">{{likes_count}}</a>
+						<a class="favorite count_{{likes_count}}">{{likes_count}}</a>
 					</div>
 				</article>
 							

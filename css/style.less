@@ -10,7 +10,7 @@ html {
 }
 
 html, body {    
-    font-family: verdana, sans-serif, arial;
+    font-family: @baseFont;
     font-size: 12px;
 }
 
@@ -41,7 +41,7 @@ body {
     #login_button { 
         display: none;
         margin-top: 200px;
-        padding: 10px;
+        padding: 10px 20px;
     }
 
     &.not_logged {
@@ -123,7 +123,7 @@ body > nav {
         top: 11px;
         right: 1px;
 
-        font-family: tahoma;
+        font-family: @altFont;
 
         width: 175px;
 
@@ -237,6 +237,20 @@ body > article {
 
         > nav { 
             border-top: 1px solid #dedede;
+
+            .active {
+                background: #dbdee2;
+                border: 1px solid #d9dcdf;
+
+                @shadow: inset 0 1px 1px rgba(0,0,0,.05);
+                .box-shadow(@shadow);
+                text-shadow: 0 1px 1px rgba(255,255,255,.75);
+
+                .border-radius(4px);
+
+                padding: 8px 10px;
+                padding-bottom: 9px;
+            }
         }
 
         .friends { margin-bottom: 0px; }
@@ -258,7 +272,7 @@ body > article {
             }
 
             span {
-                font-family: verdana;
+                font-family: @baseFont;
                 font-size: 11px;
                 text-shadow: 0 1px 1px rgba(255,255,255,.75);
             }
@@ -379,7 +393,7 @@ body > article {
                 }
 
                 display: block;
-                font-family: tahoma, verdana, arial;
+                font-family: @altFont;
 
                 width: 100%;            
 
@@ -461,7 +475,7 @@ body > article {
                     }
 
                     .author {
-                        font-family: tahoma;
+                        font-family: @altFont;
                         font-weight: bold;
                     }
 
@@ -505,12 +519,12 @@ body > article {
                         .time { 
                             color: #aaa; 
                             font-size: 13px; 
-                            font-family: tahoma;
+                            font-family: @altFont;
                         }
 
                         .favorite {
                             float: right;
-                            font-family: tahoma;
+                            font-family: @altFont;
                             font-weight: bold;
                             color: #333;
                             padding-right: 19px;
@@ -569,7 +583,7 @@ body > article {
                 padding-left: 25px;
                 font-size: 11px;
                 font-weight: bold;
-                font-family: verdana;
+                font-family: @baseFont;
                 position: relative;                
 
                 b {
@@ -577,14 +591,14 @@ body > article {
                     left: 8px;
                     top: 0px;
                     font-size: 25px;
-                    font-family: tahoma;
+                    font-family: @altFont;
                 }
             }
 
             .info {
                 font-size: 14px;
                 font-weight: bold;
-                font-family: tahoma;
+                font-family: @altFont;
                 color: @gray;                
                 margin-left: 58px;
 
@@ -700,7 +714,7 @@ body > article {
             margin-top: 10px;
             float: right;
             font-weight: bold;
-            font-family: tahoma;
+            font-family: @altFont;
             color: #888;
         }
     }

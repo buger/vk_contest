@@ -158,6 +158,7 @@ section {
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
   color: #5e7694;
   font-size: 11px;
+  font-weight: bold;
   line-height: normal;
   border: 1px solid #ccc;
   border-bottom-color: #bbb;
@@ -308,7 +309,7 @@ html {
   background-color: #f7f7f7;
 }
 html, body {
-  font-family: verdana, sans-serif, arial;
+  font-family: verdana, arial, sans-serif;
   font-size: 12px;
 }
 a {
@@ -326,7 +327,7 @@ a:hover {
 body #login_button {
   display: none;
   margin-top: 200px;
-  padding: 10px;
+  padding: 10px 20px;
 }
 body.not_logged {
   text-align: center;
@@ -420,7 +421,7 @@ body > nav #search {
   position: absolute;
   top: 11px;
   right: 1px;
-  font-family: tahoma;
+  font-family: tahoma, verdana, arial, sans-serif;
   width: 175px;
   color: white;
   border: none;
@@ -556,6 +557,19 @@ body > article aside > nav .user_list a span, body > article aside .friends .use
 body > article aside > nav {
   border-top: 1px solid #dedede;
 }
+body > article aside > nav .active {
+  background: #dbdee2;
+  border: 1px solid #d9dcdf;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  padding: 8px 10px;
+  padding-bottom: 9px;
+}
 body > article aside .friends {
   margin-bottom: 0px;
 }
@@ -577,7 +591,7 @@ body > article aside .term:hover span {
   text-decoration: underline;
 }
 body > article aside .term span {
-  font-family: verdana;
+  font-family: verdana, arial, sans-serif;
   font-size: 11px;
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
 }
@@ -681,7 +695,7 @@ body > article .profile .new_message {
 }
 body > article .profile .new_message input {
   display: block;
-  font-family: tahoma, verdana, arial;
+  font-family: tahoma, verdana, arial, sans-serif;
   width: 100%;
   border: 1px solid #cbcbcb;
   -webkit-border-radius: 5px;
@@ -771,7 +785,7 @@ body > article .profile .wall .post article .user_image img {
   border-radius: 4px;
 }
 body > article .profile .wall .post article .author {
-  font-family: tahoma;
+  font-family: tahoma, verdana, arial, sans-serif;
   font-weight: bold;
 }
 body > article .profile .wall .post article p {
@@ -819,11 +833,11 @@ body > article .profile .wall .post article .info {
 body > article .profile .wall .post article .info .time {
   color: #aaa;
   font-size: 13px;
-  font-family: tahoma;
+  font-family: tahoma, verdana, arial, sans-serif;
 }
 body > article .profile .wall .post article .info .favorite {
   float: right;
-  font-family: tahoma;
+  font-family: tahoma, verdana, arial, sans-serif;
   font-weight: bold;
   color: #333;
   padding-right: 19px;
@@ -894,7 +908,7 @@ body > article .photos header .back {
   padding-left: 25px;
   font-size: 11px;
   font-weight: bold;
-  font-family: verdana;
+  font-family: verdana, arial, sans-serif;
   position: relative;
 }
 body > article .photos header .back b {
@@ -902,12 +916,12 @@ body > article .photos header .back b {
   left: 8px;
   top: 0px;
   font-size: 25px;
-  font-family: tahoma;
+  font-family: tahoma, verdana, arial, sans-serif;
 }
 body > article .photos header .info {
   font-size: 14px;
   font-weight: bold;
-  font-family: tahoma;
+  font-family: tahoma, verdana, arial, sans-serif;
   color: gray;
   margin-left: 58px;
 }
@@ -1019,6 +1033,6 @@ body > article .photos .images li img {
   margin-top: 10px;
   float: right;
   font-weight: bold;
-  font-family: tahoma;
+  font-family: tahoma, verdana, arial, sans-serif;
   color: #888;
 }
