@@ -143,7 +143,7 @@
 
 				 	'activity: API.activity.get({uid:'+user_id+'}),',
 
-				 	'photos: API.photos.getAll({owner_id:'+user_id+',count:4}),',
+				 	'photos: API.photos.getAll({owner_id:'+user_id+',count:4, extended:1}),',
 
 					// I did't find better method to get length
 				 	'news_count: API.newsfeed.get().items@.length,', 
@@ -249,7 +249,7 @@
 
 
 		loadUserPhotos: function(user_id, offset, callback){
-			VK.callMethod("photos.getAll", { owner_id:user_id, offset:offset, count:50 }, function(resp){
+			VK.callMethod("photos.getAll", { owner_id:user_id, offset:offset, count:50, extended:1 }, function(resp){
 				var photos = _.rest(resp.response);
 									
 				user = Users.get(user_id);
@@ -712,6 +712,8 @@
 				'is_photo': this.activeElement.attr('data-photo') != void 0,
 				'is_video': this.activeElement.attr('data-video') != void 0,
 
+				'text': this.activeElement.attr('title'),				
+
 				'photo': this.activeElement.attr('data-photo'),
 				'video': this.activeElement.attr('data-video'),
 
@@ -719,6 +721,8 @@
 				
 				'owner_id': this.activeElement.attr('data-owner-id')
 			}
+
+			view.show_info = !!(view.text || view.elements_count > 1);
 
 			this.el.innerHTML = $.mustache(this.template, view);
 			

@@ -1029,8 +1029,15 @@ body > article .photos .images li img {
   min-width: 10px;
   min-height: 10px;
 }
+.lightbox .info {
+  text-align: left;
+  padding: 20px 5px;
+  padding-bottom: 5px;
+}
+.lightbox .info .text {
+  display: inline-block;
+}
 .lightbox .info .count {
-  margin-top: 10px;
   float: right;
   font-weight: bold;
   font-family: tahoma, verdana, arial, sans-serif;

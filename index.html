@@ -137,7 +137,7 @@
 				<ul class="images">
 					{{#user_photos}}
 					<li>
-						<a data-src="{{src_big}}" data-photo="{{pid}}">
+						<a data-src="{{src_big}}" data-photo="{{pid}}" title="{{text}}">
 							<img src="{{src}}" />
 						</a>
 					</li>
@@ -167,7 +167,7 @@
 					{{#user_photos}}
 					<li>
 						{{^is_stub}}
-						<a data-src="{{src_big}}" data-photo="{{pid}}">
+						<a data-src="{{src_big}}" data-photo="{{pid}}" title="{{text}}">
 							<img src="{{src}}"/>
 						</a>
 						{{/is_stub}}
@@ -230,11 +230,14 @@
 				<iframe src="http://vkontakte.ru/video_ext.php?oid={{owner_id}}&id={{video}}&hash=4734447340036429&hd=1" width="607" height="360" frameborder="0"></iframe>
 			{{/is_video}}
 			</span>
+			{{#show_info}}
 			<div class="info">
+				<span class="text">{{text}}</span>
 				{{^one_element}}
 				<span class="count">Photo {{current_index}} of {{elements_count}}</span>
 				{{/one_element}}
 			</div>
+			{{/show_info}}
 		</span>
 	</script>
 
