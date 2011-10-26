@@ -19,12 +19,13 @@ a {
     color: @linkColor;
     cursor: pointer;
 
-    &:hover {
-        text-decoration: underline;
+    &:visited, &:active {
+        color: @linkColor;
     }
 
-    &:focus, &:visited, &:active {
-        color: @linkColor;
+    &:hover {
+        text-decoration: underline;
+        color: @linkColorHover;
     }
 }
 
@@ -36,9 +37,19 @@ a {
     .clearfix();
 }
 
-body {
+body {  
+    #login_button { 
+        display: none;
+        margin-top: 200px;
+        padding: 10px;
+    }
+
     &.not_logged {
+        text-align: center;
+
         > nav, > article { display: none; }
+
+        #login_button { display: inline-block; }
     }
 
     &.loading * { cursor: wait !important; }
@@ -202,11 +213,11 @@ body > article {
 
                     display: inline-block;
                     float: left;
-                    width: 51px;                    
-
+                    width: 51px;          
+                    
                     &:hover {
-                        text-decoration: underline;
-                    }
+                        color: @linkColorHover;
+                    }          
 
                     img { 
                         .square(50px); 
@@ -218,7 +229,6 @@ body > article {
                         padding-top: 5px; 
                         text-align: center;
                         font-size: 10px;
-                        color: @linkColor;
                         margin-left: -2px;
                     }
                 }
@@ -240,10 +250,16 @@ body > article {
             padding-bottom: 10px;
             font-weight: bold;
 
+            &:hover {
+                color: @linkColorHover;
+                text-decoration: none;
+
+                span { text-decoration: underline; }
+            }
+
             span {
                 font-family: verdana;
                 font-size: 11px;
-                color: @linkColor;    
                 text-shadow: 0 1px 1px rgba(255,255,255,.75);
             }
 
@@ -447,7 +463,6 @@ body > article {
                     .author {
                         font-family: tahoma;
                         font-weight: bold;
-                        color: @linkColor;
                     }
 
                     p { 
@@ -478,6 +493,9 @@ body > article {
                                     max-height: 80px;
                                 }
                             }
+                            
+                            // Display multiple photos in rov
+                            &.photo, &.video { display: inline; }
                         }
                     }
 
@@ -505,7 +523,10 @@ body > article {
                              // Transitions
                             .transition(.1s linear all);
 
-                            &:hover { .opacity(90); }
+                            &:hover { 
+                                .opacity(90); 
+                                text-decoration: none;
+                            }
 
                             &.count_0 { 
                                 .opacity(0); 
@@ -543,6 +564,45 @@ body > article {
             padding: 22px 20px;
             border-bottom: 1px solid #e6e6e6;             
             #gradient > .vertical(#f7f7f7, #ededed);
+            
+            .back {
+                padding-left: 25px;
+                font-size: 11px;
+                font-weight: bold;
+                font-family: verdana;
+                position: relative;                
+
+                b {
+                    position: absolute;
+                    left: 8px;
+                    top: 0px;
+                    font-size: 25px;
+                    font-family: tahoma;
+                }
+            }
+
+            .info {
+                font-size: 14px;
+                font-weight: bold;
+                font-family: tahoma;
+                color: @gray;                
+                margin-left: 58px;
+
+                > * {
+                    text-shadow: 0px 1px 0px rgba(255,255,255, 0.3);
+                    padding: 3px;
+                }
+
+                .photos {
+                    border-right: 1px solid #CCC;
+                    padding-right: 10px;
+                }
+
+                .albums {
+                    border-left: 1px solid white;
+                    padding-left: 10px;
+                }                                
+            }
         }
 
         .images {
@@ -557,12 +617,12 @@ body > article {
                 text-align: center;
                 background-color: #f1f1f1;
 
-                .border-radius(5px);
+                .border-radius(3px);
                 overflow: hidden;
 
                 .size(98px, 130px);
 
-                img { .border-radius(5px); }
+                img { .border-radius(3px); }
             }
         }
     }
@@ -587,7 +647,7 @@ body > article {
     
         position: absolute;
 
-        top: 65px;
+        top: 80px;
 
         font-size: 35px;
         font-weight: bold;
@@ -603,8 +663,19 @@ body > article {
         }
     }
 
-    .close { right: 30px; }
-    .back { left: 30px; font-size: 28px; }
+    .close { right: 32px; }
+    .back { 
+        left: 32px; 
+        
+        // Creating triagle using CSS
+        // http://css-tricks.com/snippets/css/css-triangle/
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent; 
+
+        border-right: 9px solid white;
+    }    
 
     .window {        
         display: inline-block;
@@ -616,6 +687,21 @@ body > article {
         .border-radius(5px);
         background: white;
 
-        img {.border-radius(4px); }
+        img {
+            .border-radius(4px); 
+
+            min-width: 10px;
+            min-height: 10px;
+        }
+    }
+
+    .info {
+        .count {
+            margin-top: 10px;
+            float: right;
+            font-weight: bold;
+            font-family: tahoma;
+            color: #888;
+        }
     }
 }
