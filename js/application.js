@@ -628,10 +628,10 @@
 			var counters = user.counters;
 
 			navigation = [				
-				{ name:'Photos', count:counters.photos, url:"/photos" },
-				{ name:'Videos', count:counters.videos },
-				{ name:'Audio files', count:counters.audios }
-			];
+				{ name:'Photos', count:counters.photos, type:"photos" },
+				{ name:'Videos', count:counters.videos},
+				{ name:'Audio files', count:counters.audios}
+			];			
 
 			if (VK.SESSION.user_id === user.id)
 				navigation.splice(0, 0, { name: 'News', count:counters.news });
@@ -641,6 +641,10 @@
 
 			var view = {
 				'navigation': navigation,
+				'is_active_nav': function(){ 
+					return App.content.mode === this.type;
+				},
+
 				'user': user,
 
 				'user_friends': _.first(user.friends, 6),
@@ -689,11 +693,9 @@
 
 			wnd.document.body.appendChild(this.el);
 
-			$(wnd).bind('keyup', _.bind(function(evt){
-				if (evt.keyCode === 27) {
-					this.close(this.el);
-				}	
-			}, this));
+			_.bindAll(this, 'handleHotkeys');
+
+			$(wnd).bind('keyup', this.handleHotkeys);
 		},
 
 		
@@ -767,12 +769,14 @@
 		},
 		
 
-		closeOnEsc: function(evt){			
-			console.log('keyup', evt);
-
-			if (evt.keyCode == 27) {
+		handleHotkeys: function(evt){						
+			if (evt.keyCode === 27) { // escape
 				this.close(this.el);
-			}	
+			} else if (evt.keyCode === 39) { // right arrow
+				this.next();
+			} else if (evt.keyCode === 37) { // left arrow
+				this.previous();
+			}		
 		}
 
 	});
@@ -925,8 +929,9 @@
 
 		loadUserPhotos: function(user_id, from_cache){
 			this.loadUser(user_id, function(user){
-				App.sidebar.render(user);
 				App.content.renderPhotos(user);
+
+				App.sidebar.render(user);						
 			});
 		}
 
