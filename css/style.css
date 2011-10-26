@@ -140,29 +140,30 @@ section {
  * ----------------------------------------------------- */.btn {
   cursor: pointer;
   display: inline-block;
-  background-color: #e6e6e6;
-  background-repeat: no-repeat;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(white), color-stop(25%, white), to(#e6e6e6));
-  background-image: -webkit-linear-gradient(white, white 25%, #e6e6e6);
-  background-image: -moz-linear-gradient(top, white, white 25%, #e6e6e6);
-  background-image: -ms-linear-gradient(white, white 25%, #e6e6e6);
-  background-image: -o-linear-gradient(white, white 25%, #e6e6e6);
-  background-image: linear-gradient(white, white 25%, #e6e6e6);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='white', endColorstr='#e6e6e6', GradientType=0);
+  background-color: #f0f0f0;
+  background-repeat: repeat-x;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#f7f7f7), to(#f0f0f0));
+  background-image: -moz-linear-gradient(top, #f7f7f7, #f0f0f0);
+  background-image: -ms-linear-gradient(top, #f7f7f7, #f0f0f0);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f7f7f7), color-stop(100%, #f0f0f0));
+  background-image: -webkit-linear-gradient(top, #f7f7f7, #f0f0f0);
+  background-image: -o-linear-gradient(top, #f7f7f7, #f0f0f0);
+  background-image: linear-gradient(top, #f7f7f7, #f0f0f0);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7f7f7', endColorstr='#f0f0f0', GradientType=0);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  border-color: #f0f0f0 #f0f0f0 #cacaca;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   padding: 10px 14px 10px;
   text-decoration: none;
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
-  color: #333;
+  color: #5e7694;
   font-size: 11px;
   line-height: normal;
   border: 1px solid #ccc;
   border-bottom-color: #bbb;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  border-radius: 6px;
-  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
   -webkit-transition: 0.1s linear all;
   -moz-transition: 0.1s linear all;
   -ms-transition: 0.1s linear all;
@@ -171,7 +172,7 @@ section {
 }
 .btn:hover {
   background-position: 0 -15px;
-  color: #333;
+  color: #405165;
   text-decoration: none;
 }
 .btn:focus {
@@ -179,24 +180,27 @@ section {
 }
 .btn.primary {
   color: white;
-  background-color: #0064cd;
+  background-color: #4f8ad1;
   background-repeat: repeat-x;
-  background-image: -khtml-gradient(linear, left top, left bottom, from(#049cdb), to(#0064cd));
-  background-image: -moz-linear-gradient(top, #049cdb, #0064cd);
-  background-image: -ms-linear-gradient(top, #049cdb, #0064cd);
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #049cdb), color-stop(100%, #0064cd));
-  background-image: -webkit-linear-gradient(top, #049cdb, #0064cd);
-  background-image: -o-linear-gradient(top, #049cdb, #0064cd);
-  background-image: linear-gradient(top, #049cdb, #0064cd);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#049cdb', endColorstr='#0064cd', GradientType=0);
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#74a8e2), to(#4f8ad1));
+  background-image: -moz-linear-gradient(top, #74a8e2, #4f8ad1);
+  background-image: -ms-linear-gradient(top, #74a8e2, #4f8ad1);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #74a8e2), color-stop(100%, #4f8ad1));
+  background-image: -webkit-linear-gradient(top, #74a8e2, #4f8ad1);
+  background-image: -o-linear-gradient(top, #74a8e2, #4f8ad1);
+  background-image: linear-gradient(top, #74a8e2, #4f8ad1);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#74a8e2', endColorstr='#4f8ad1', GradientType=0);
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-  border-color: #0064cd #0064cd #003f81;
+  border-color: #4f8ad1 #4f8ad1 #2c64a8;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  -webkit-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.1);
 }
 .btn:active {
-  -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.05);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 .btn.disabled {
   cursor: default;
@@ -309,17 +313,29 @@ html, body {
 }
 a {
   text-decoration: none;
-  color: #0064cd;
+  color: #5e7694;
   cursor: pointer;
+}
+a:visited, a:active {
+  color: #5e7694;
 }
 a:hover {
   text-decoration: underline;
+  color: #405165;
 }
-a:focus, a:visited, a:active {
-  color: #0064cd;
+body #login_button {
+  display: none;
+  margin-top: 200px;
+  padding: 10px;
+}
+body.not_logged {
+  text-align: center;
 }
 body.not_logged > nav, body.not_logged > article {
   display: none;
+}
+body.not_logged #login_button {
+  display: inline-block;
 }
 body.loading * {
   cursor: wait !important;
@@ -521,7 +537,7 @@ body > article aside > nav .user_list a, body > article aside .friends .user_lis
   width: 51px;
 }
 body > article aside > nav .user_list a:hover, body > article aside .friends .user_list a:hover, body > article aside .followers .user_list a:hover {
-  text-decoration: underline;
+  color: #405165;
 }
 body > article aside > nav .user_list a img, body > article aside .friends .user_list a img, body > article aside .followers .user_list a img {
   height: 50px;
@@ -535,7 +551,6 @@ body > article aside > nav .user_list a span, body > article aside .friends .use
   padding-top: 5px;
   text-align: center;
   font-size: 10px;
-  color: #0064cd;
   margin-left: -2px;
 }
 body > article aside > nav {
@@ -554,10 +569,16 @@ body > article aside .term {
   padding-bottom: 10px;
   font-weight: bold;
 }
+body > article aside .term:hover {
+  color: #405165;
+  text-decoration: none;
+}
+body > article aside .term:hover span {
+  text-decoration: underline;
+}
 body > article aside .term span {
   font-family: verdana;
   font-size: 11px;
-  color: #0064cd;
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
 }
 body > article aside .term .count {
@@ -752,7 +773,6 @@ body > article .profile .wall .post article .user_image img {
 body > article .profile .wall .post article .author {
   font-family: tahoma;
   font-weight: bold;
-  color: #0064cd;
 }
 body > article .profile .wall .post article p {
   font-family: arial;
@@ -790,6 +810,9 @@ body > article .profile .wall .post article .attachments li.link img {
   margin-right: 10px;
   max-height: 80px;
 }
+body > article .profile .wall .post article .attachments li.photo, body > article .profile .wall .post article .attachments li.video {
+  display: inline;
+}
 body > article .profile .wall .post article .info {
   margin-top: 2px;
 }
@@ -821,6 +844,7 @@ body > article .profile .wall .post article .info .favorite:hover {
   -khtml-opacity: 0.9;
   -moz-opacity: 0.9;
   opacity: 0.9;
+  text-decoration: none;
 }
 body > article .profile .wall .post article .info .favorite.count_0 {
   filter: alpha(opacity=0);
@@ -866,6 +890,39 @@ body > article .photos header {
   background-image: linear-gradient(top, #f7f7f7, #ededed);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7f7f7', endColorstr='#ededed', GradientType=0);
 }
+body > article .photos header .back {
+  padding-left: 25px;
+  font-size: 11px;
+  font-weight: bold;
+  font-family: verdana;
+  position: relative;
+}
+body > article .photos header .back b {
+  position: absolute;
+  left: 8px;
+  top: 0px;
+  font-size: 25px;
+  font-family: tahoma;
+}
+body > article .photos header .info {
+  font-size: 14px;
+  font-weight: bold;
+  font-family: tahoma;
+  color: gray;
+  margin-left: 58px;
+}
+body > article .photos header .info > * {
+  text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3);
+  padding: 3px;
+}
+body > article .photos header .info .photos {
+  border-right: 1px solid #CCC;
+  padding-right: 10px;
+}
+body > article .photos header .info .albums {
+  border-left: 1px solid white;
+  padding-left: 10px;
+}
 body > article .photos .images {
   zoom: 1;
   margin: 20px;
@@ -884,17 +941,17 @@ body > article .photos .images li {
   margin: 18px 8px;
   text-align: center;
   background-color: #f1f1f1;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
   overflow: hidden;
   height: 98px;
   width: 130px;
 }
 body > article .photos .images li img {
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
 }
 .lightbox {
   position: fixed;
@@ -909,7 +966,7 @@ body > article .photos .images li img {
 .lightbox .back, .lightbox .close {
   color: white;
   position: absolute;
-  top: 65px;
+  top: 80px;
   font-size: 35px;
   font-weight: bold;
   -webkit-transition: 0.1s linear all;
@@ -931,11 +988,15 @@ body > article .photos .images li img {
   opacity: 1;
 }
 .lightbox .close {
-  right: 30px;
+  right: 32px;
 }
 .lightbox .back {
-  left: 30px;
-  font-size: 28px;
+  left: 32px;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 9px solid white;
 }
 .lightbox .window {
   display: inline-block;
@@ -951,4 +1012,13 @@ body > article .photos .images li img {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
+  min-width: 10px;
+  min-height: 10px;
+}
+.lightbox .info .count {
+  margin-top: 10px;
+  float: right;
+  font-weight: bold;
+  font-family: tahoma;
+  color: #888;
 }

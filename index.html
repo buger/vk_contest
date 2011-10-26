@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" manifest="cache.manifest">
+<html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="edge" >
@@ -18,6 +18,8 @@
 	<![endif]-->
 </head>
 <body class="not_logged">
+	<button id="login_button" style="display:none">Войти Вконтакте</button>
+
 	<nav>
 		<div>
 			<div class="logo">
@@ -49,7 +51,7 @@
 				{{#show_navigation}}
 				<nav>										
 					{{#navigation}}
-					<a href="#/user/{{user.id}}/photos" class="term">
+					<a href="#/user/{{user.id}}{{url}}" class="term">
 						<span>{{name}}</span>
 						<div class="count">{{count}}</div>
 					</a>					
@@ -155,11 +157,11 @@
 		<section class="photos" style="display: none">
 			<script type="text/template" id="user_photos_template">
 				<header>
-					<a class="btn back"><b><</b>Back to Profile</a>
+					<a class="back btn"><b>‹</b>Back to Profile</a>
 
-					<span>{{photos_count}}</span>
-					<span class='devider'>|</span>
-					<a>{{albums_count}}</a>
+					<span class="info">
+						<span class="photos">{{photos_count}} photos</span><a class="albums">{{albums_count}} albums</a>
+					</span>
 				</header>
 				<ul class="images" data-count="{{photos_count}}">
 					{{#user_photos}}
@@ -176,9 +178,7 @@
 		</section>
 	</article>
 
-	<footer></footer>
-
-	<button id="login_button" style="position: fixed; top: 300px;">Войти</button>		
+	<footer></footer>	
 
 	<script type="text/template" id="user_wall_template">
 		{{#posts}}
@@ -219,7 +219,7 @@
 	</script>
 
 	<script type="text/template" id="lightbox_template">
-		<a class='back' title="Back">◄</a>
+		<a class='back' title="Back"></a>
 		<a class='close' title="Close">×</a>
 		<span class='window'>
 			<span class='content'>
@@ -231,7 +231,9 @@
 			{{/is_video}}
 			</span>
 			<div class="info">
-				<span>Photo {{current_index}} of {{elements_count}}</span>
+				{{^one_element}}
+				<span class="count">Photo {{current_index}} of {{elements_count}}</span>
+				{{/one_element}}
 			</div>
 		</span>
 	</script>
@@ -244,6 +246,6 @@
 	<script type="text/javascript" src="js/backbone.min.js"></script>
 	<script type="text/javascript" src="js/mustache.js"></script>
 
-	<script type="text/javascript" src="js/application.js?5"></script>
+	<script type="text/javascript" src="js/application.js?9"></script>
 </body>
 </html>

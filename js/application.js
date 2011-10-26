@@ -1,13 +1,22 @@
 (function(){ 
-	var wnd = this;
+	var wnd = this;	
 
 	/*
 		Util functions
 	*/
 
-	function fullName(user) {
-		return user.first_name + " " + user.last_name;
+
+	// console object fix 
+	if (!wnd.console) {
+		wnd.console = {};
+
+		var methods = ['log', 'debug', 'info', 'warn', 'error', 'assert', 'dir', 'dirxml', 'group', 'groupEnd', 'time', 'timeEnd', 'count', 'trace', 'profile', 'profileEnd'];
+
+		for (var i=0; i<methods.length; i++) {
+			window.console[methods[i]] = function(){}
+		}
 	}
+
 
 	var dateMonths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -37,6 +46,10 @@
 
 		return arr.join("&");
 	}	
+
+	function fullName(user) {
+		return user.first_name + " " + user.last_name;
+	}
 
 	
 	/*
@@ -81,7 +94,10 @@
 
 		//Simple JSONP implementation
 		callMethod: function(name, data, callback){
-			var method_name = "clb" + Date.now();			
+
+			console.log("calling method:", name);
+			
+			var method_name = "clb" + (+new Date());
 
 			data['access_token'] = VK.SESSION.access_token;
 			data['callback'] = method_name;			
@@ -89,17 +105,27 @@
 			var head = document.getElementsByTagName("head")[0];         
 			var script = document.createElement('script');
 			script.type = 'text/javascript';
-			script.src = VK.BASE_URL + name + '?' + hashToQueryString(data);			
-			head.appendChild(script);								
+			script.src = VK.BASE_URL + name + '?' + hashToQueryString(data);
+			head.appendChild(script);
 
-			wnd[method_name] = function(response) {				
-				console.log(response);
+			wnd[method_name] = function(response) {
+				console.log("response:", response);
+
+				// Token expired
+				if (response.error && response.error.error_code === 5) {
+					VK.SESSION = null;
+					store.remove('session');
+					wnd.document.body.className = "not_logged";
+											
+					return;
+				}
 
 				callback(response);				
 								
 				// Avoid memory leaks
 				head.removeChild(script);
-				delete wnd[method_name];
+
+				wnd[method_name] = null;
 			}
 		},
 
@@ -135,6 +161,7 @@
 
 
 			VK.callMethod("execute", { code: query }, function(resp){
+
 				var photos = resp.response.photos;
 
 				user = resp.response.profile;
@@ -195,6 +222,11 @@
 			query += ";return({comments:["+comments_query.join(',')+"], users:["+users_query+"]});";
 
 			VK.callMethod("execute", { code: query }, function(resp){
+				// Sometimes it gives false in results
+				// TODO: find better workaround
+				if (resp.response.comments[0] === false)
+					return
+
 				// Updating comments cache
 				_.each(resp.response.comments, function(comments, idx){
 					Posts.create({
@@ -257,39 +289,6 @@
 		}
 	}		
 
-	if (wnd.location.hash.match(/access_token/)) {		
-		var hash = this.location.hash.substr(1).split('&');
-
-		var session = {}
-
-		for (var param, i=0, l=hash.length; i<l; i++) {
-			param = hash[i].split('=');
-
-			session[param[0]] = param[1];
-		}
-		session['user_id'] = parseInt(session['user_id']);
-
-		store.set('session', session);
-		
-		wnd.opener.location.hash = "logged";
-		return wnd.close();			
-	}
-
-	if (wnd.location.hash.match(/error/)) {
-		return wnd.close();
-	}
-
-	$('#login_button').bind('click', function(){		
-		var url = ["http://api.vkontakte.ru/oauth/authorize?",			
-	 			   "client_id=" + VK.APP_ID,
-	 			   "scope=" + VK.SETTINGS,
-	 			   "redirect_uri=" + VK.REDIRECT_URI,
-	 			   "display=" + VK.DISPLAY,
-	 			   "response_type=token"].join('&')
-
-		var wnd = window.open(url, "auth_dialog", "menubar=0,resizable=0,width=600,height=400");			
-	});	
-
 
 	var WallView = Backbone.View.extend({
 		
@@ -321,7 +320,7 @@
 				// Creating stubs if not found in cache
 				if (!cache) {
 					comments = _.range(post.comments.count);
-					comments = comments.map(function(){ return { } });
+					comments = _.map(comments, function(){ return {} });
 					comments = _.first(comments, 3);
 				} else {																	
 					comments = cache.get('comments');
@@ -363,8 +362,9 @@
 					var user_id = this.uid || this.from_id;
 
 					if (!user_id) return {}
-
-					return Users.get(user_id).toJSON();
+					
+					var cache = Users.get(user_id)
+					if (cache) return cache.toJSON();
 				},
 
 				'has_attachment': function(){
@@ -419,7 +419,7 @@
 
 			$('article section.profile .wall').html(output);
 						
-
+				
 			// Updating comments. Updating only uncached and changed posts 
 			var posts_to_update = _.select(user.get('wall'), function(post){ 
 				var cache = Posts.get(user.id+"_"+post.id);
@@ -427,7 +427,7 @@
 				return (!cache || cache.get('comments_count') != post.comments.count)							
 			});			
 			var post_ids = _.map(posts_to_update, function(post){ return post.id });
-
+			
 			// Second request to get comments;
 			VK.loadWallComments(user.id, post_ids, void 0, _.bind(function(user){
 				this.render(user);
@@ -595,7 +595,7 @@
 					if (this.model.get('counters').photos === this.model.get('photos').length)
 						return;					
 
-					var offset = this.model.get('photos').length;
+					var offset = this.model.get('photos').length;					
 
 					VK.loadUserPhotos(this.model.id, offset, _.bind(function(user){
 						this.renderPhotos(user);
@@ -637,8 +637,7 @@
 				navigation.splice(0, 0, { name: 'News', count:counters.news });
 
 			// Remove items with zero count
-			navigation = _.reject(navigation, function(i){ return !i.count });						
-
+			navigation = _.reject(navigation, function(i){ return !i.count });
 
 			var view = {
 				'navigation': navigation,
@@ -688,7 +687,13 @@
 
 			this.render();
 
-			document.body.appendChild(this.el);
+			wnd.document.body.appendChild(this.el);
+
+			$(wnd).bind('keyup', _.bind(function(evt){
+				if (evt.keyCode === 27) {
+					this.close(this.el);
+				}	
+			}, this));
 		},
 
 		
@@ -700,6 +705,7 @@
 			var view = {
 				'current_index': this.currentIndex + 1,
 				'elements_count': this.elementsCount,
+				'one_element': this.elementsCount <= 1,
 
 				'is_photo': this.activeElement.attr('data-photo') != void 0,
 				'is_video': this.activeElement.attr('data-video') != void 0,
@@ -707,7 +713,7 @@
 				'photo': this.activeElement.attr('data-photo'),
 				'video': this.activeElement.attr('data-video'),
 
-				'src': this.activeElement.attr('data-src'),
+				'src': this.activeElement.attr('data-src'),				
 				
 				'owner_id': this.activeElement.attr('data-owner-id')
 			}
@@ -734,7 +740,7 @@
 		},		
 
 
-		prefetchNext: function(){
+		prefetchNext: function(){			
 			if ((this.currentIndex + 1) < this.elementsCount) {
 				var img = new Image();
 				img.src = $(this.context[this.currentIndex+1]).attr('data-src');
@@ -746,17 +752,27 @@
 					!this.context[this.currentIndex + 5]) 
 				{							 
 					 App.content.loadMore(true, _.bind(function(){
-					 	this.context = this.parentEl.find('a[data-photo]');
+					 	this.context = App.content.el.find('section.photos a[data-photo]');
 					 }, this));
 				}
 			}
 		},
 
 
+		// Called by event or mannualy		
 		close: function(evt){
-			if (evt.target === this.el || evt.target.className === 'close') {
+			if (evt === this.el || evt.target === this.el || evt.target.className === 'close') {
 				document.body.removeChild(this.el);
 			}
+		},
+		
+
+		closeOnEsc: function(evt){			
+			console.log('keyup', evt);
+
+			if (evt.keyCode == 27) {
+				this.close(this.el);
+			}	
 		}
 
 	});
@@ -767,7 +783,8 @@
 		el: document.body,				
 
 		events: {
-			"click a[data-photo], a[data-video]": 'openPhoto'
+			"click a[data-photo], a[data-video]": 'openPhoto',
+			"click #login_button": "login"
 		},
 
 		
@@ -776,11 +793,16 @@
 			this.sidebar = new SidebarView();
 
 			this.render();
+
+			this.getAccessToken();
 		},
 			
 
 		render: function(user){			
 			var current_user, full_name;
+
+			if (!VK.SESSION.access_token)
+				$('#login_button').show();
 
 			if (!(current_user = Users.get(VK.SESSION.user_id))) return;
 
@@ -789,8 +811,44 @@
 			$('body > nav .logo a').html(full_name);
 		},
 
+		
 		openPhoto: function(evt){	
 			new Lightbox({ source: evt.target });
+		},
+
+
+		getAccessToken: function(){
+			if (wnd.location.hash.match(/access_token/)) {		
+				var hash = wnd.location.hash.substr(1).split('&');
+
+				var session = {}
+
+				for (var param, i=0, l=hash.length; i<l; i++) {
+					param = hash[i].split('=');
+
+					session[param[0]] = param[1];
+				}
+				session['user_id'] = parseInt(session['user_id']);
+
+				store.set('session', session);
+				
+				wnd.opener.location.hash = "logged";
+				return wnd.close();			
+			} else if (wnd.location.hash.match(/error/)) {
+				return wnd.close();
+			}
+		},
+
+
+		login: function(){
+			var url = ["http://api.vkontakte.ru/oauth/authorize?",			
+		 			   "client_id=" + VK.APP_ID,
+		 			   "scope=" + VK.SETTINGS,
+		 			   "redirect_uri=" + VK.REDIRECT_URI,
+		 			   "display=" + VK.DISPLAY,
+		 			   "response_type=token"].join('&')
+
+			var wnd = window.open(url, "auth_dialog", "menubar=0,resizable=0,width=600,height=450");			
 		}
 
 	});
@@ -854,6 +912,7 @@
 
 			// Loading from Cache to speedup UI. Uppdating data in background
 			var cached_user = Users.get(user_id);
+
 			if (cached_user && cached_user.get('counters')) {
 				this._loadUserCallback(cached_user, callback);
 			}
