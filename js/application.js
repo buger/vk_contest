@@ -222,11 +222,6 @@
 			query += ";return({comments:["+comments_query.join(',')+"], users:["+users_query+"]});";
 
 			VK.callMethod("execute", { code: query }, function(resp){
-				// Sometimes it gives false in results
-				// TODO: find better workaround
-				if (resp.response.comments[0] === false)
-					return
-
 				// Updating comments cache
 				_.each(resp.response.comments, function(comments, idx){
 					Posts.create({
@@ -314,7 +309,7 @@
 			
 			// Because we can't load post comments among with userProfile, we displayng first level post messages, with comment stubs (only if post loaded first time), based on given count, and downloading rest of comments in background.
 			var wall = _.map(user.get('wall'), function(post){
-				var comments;
+				var comments = [];
 				var cache = Posts.get(user.id+"_"+post.id);
 
 				// Creating stubs if not found in cache
@@ -322,8 +317,9 @@
 					comments = _.range(post.comments.count);
 					comments = _.map(comments, function(){ return {} });
 					comments = _.first(comments, 3);
-				} else {																	
+				} else {
 					comments = cache.get('comments');
+
 					comments = _.sortBy(comments, function(c){ return c.date });
 					
 					// Colaps comments thread and show only last 3 comments					
@@ -383,10 +379,16 @@
 						case 'app':
 						case 'posted_photo':
 							att.preview = att.image_small || att.src;
-							tmpl = '<a class="{{type}}" data-src="{{src_big}}" data-{{type}}="{{id}}" data-owner-id="{{owner_id}}"><img src="{{preview}}"" /></a>';
+							att.orig_src = att.src_xbig || att.src_big;
+
+							tmpl = '<a class="{{type}}" data-src="{{orig_src}}" data-{{type}}="{{id}}">'+
+								'<div class="image" style="background-image:url({{preview}})"><img src="{{preview}}"/></div>'+
+								'</a>';
 							break;
 
 						case 'link':
+							att.title = att.title || att.url;
+
 							tmpl = '{{#image_src}}<img src="{{image_src}}"/>{{/image_src}}' +
 								   '<a href="{{url}}" target="_blank" title="{{title}}">{{title}}</a>' +
 								   '<div>{{{description}}}</div></a>';
@@ -401,7 +403,7 @@
 				},
 
 				'more_then_three_comments': function(){
-					return this.comments && this.comments.count > 3;
+					return this.comments && this.comments.count > 3 && this.comments[0] !== false;
 				},
 
 				'is_closed': function(){
@@ -424,7 +426,7 @@
 			var posts_to_update = _.select(user.get('wall'), function(post){ 
 				var cache = Posts.get(user.id+"_"+post.id);
 
-				return (!cache || cache.get('comments_count') != post.comments.count)							
+				return (!cache || (cache.comments && cache.comments[0] && cache.get('comments_count') !== post.comments.count ));
 			});			
 			var post_ids = _.map(posts_to_update, function(post){ return post.id });
 			
@@ -513,7 +515,9 @@
 
 				'full_name': function() {
 					return fullName(this);
-				}		
+				},
+
+				'orig_src': function(){ return this.src_xbig || this.src_big }
 			};
 
 			output = $.mustache(this.profile_template, view);
@@ -560,6 +564,8 @@
 
 				'have_photos': !!user.photos.length,
 				'user_photos': user_photos,
+
+				'orig_src': function(){ return this.src_xbig || this.src_big },
 
 				'is_stub': function(){ return !this.pid }
 			}			
@@ -678,7 +684,7 @@
 		
 
 		initialize: function(){
-			if (this.options.source.nodeName === 'IMG')
+			if (this.options.source.className === 'image')
 				this.options.source = this.options.source.parentNode;
 			
 			// This should be our photo contaiter
@@ -725,6 +731,9 @@
 			view.show_info = !!(view.text || view.elements_count > 1);
 
 			this.el.innerHTML = $.mustache(this.template, view);
+
+			if (!this.currentIndex)
+				$(this.el).find('.back').hide();
 			
 			this.prefetchNext();
 		},
