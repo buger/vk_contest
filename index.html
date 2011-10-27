@@ -37,7 +37,7 @@
 	<article itemscope itemtype="http://schema.org/Person">					
 		<aside>
 			<script type="text/template" id="user_sidebar_template">
-				<div class="profile_image">
+				<div class="profile_image" style="background-image: url({{user.photo_big}});">
 					<img itemprop="image" src="{{user.photo_big}}"/>
 				</div>
 				
@@ -68,8 +68,8 @@
 
 					<div class="user_list">
 						{{#user_friends}}
-						<a href="#/user/{{uid}}">
-							<img src='{{photo}}' />
+						<a href="#/user/{{uid}}" >
+							<div class="image" style="background-image:url({{photo}})"></div>
 							<span>{{first_name}}</span>
 						</a>
 						{{/user_friends}}
@@ -87,7 +87,7 @@
 					<div class="user_list">
 						{{#user_followers}}
 						<a href="#/user/{{uid}}">
-							<img src='{{photo}}' />
+							<div class="image" style="background-image:url({{photo}})"></div>
 							<span>{{first_name}}</span>
 						</a>
 						{{/user_followers}}
@@ -137,8 +137,8 @@
 				<ul class="images">
 					{{#user_photos}}
 					<li>
-						<a data-src="{{src_big}}" data-photo="{{pid}}" title="{{text}}">
-							<img src="{{src}}" />
+						<a data-src="{{orig_src}}" data-photo="{{pid}}" title="{{text}}">
+							<div class="image" style="background-image: url({{src}})"></div>
 						</a>
 					</li>
 					{{/user_photos}}
@@ -167,8 +167,8 @@
 					{{#user_photos}}
 					<li>
 						{{^is_stub}}
-						<a data-src="{{src_big}}" data-photo="{{pid}}" title="{{text}}">
-							<img src="{{src}}"/>
+						<a data-src="{{orig_src}}" data-photo="{{pid}}" title="{{text}}">
+							<div class="image" style="background-image: url({{src}})"></div>
 						</a>
 						{{/is_stub}}
 					</li>
@@ -187,7 +187,7 @@
 				<article {{^date}}class="stub"{{/date}}>
 					{{#user_comment}}
 					<a href="#/user/{{id}}" class="user_image">
-						<img src="{{photo}}" />
+						<div class="image" style="background-image: url({{photo}});"></div>
 					</a>				
 					<a href="#/user/{{id}}" class="author">{{full_name}}</a>
 					{{/user_comment}}
@@ -232,7 +232,7 @@
 			</span>
 			{{#show_info}}
 			<div class="info">
-				<span class="text">{{text}}</span>
+				<span class="text">{{{text}}}</span>
 				{{^one_element}}
 				<span class="count">Photo {{current_index}} of {{elements_count}}</span>
 				{{/one_element}}

@@ -179,10 +179,10 @@ body > article {
             width: 200px;
             min-height: 100px;
             text-align: center;
+
+            .background-image(5px);
             
-            img {
-                .border-radius(5px);
-            }
+            img { visibility: hidden; }
             
             + nav { border-top: none; }     
         }
@@ -219,10 +219,9 @@ body > article {
                         color: @linkColorHover;
                     }          
 
-                    img { 
+                    .image { 
                         .square(50px); 
-
-                        .border-radius(5px);
+                        .background-image(5px);
                     }
                     span { 
                         display: block;
@@ -243,8 +242,7 @@ body > article {
                 border: 1px solid #d9dcdf;
 
                 @shadow: inset 0 1px 1px rgba(0,0,0,.05);
-                .box-shadow(@shadow);
-                text-shadow: 0 1px 1px rgba(255,255,255,.75);
+                .box-shadow(@shadow);                
 
                 .border-radius(4px);
 
@@ -371,12 +369,12 @@ body > article {
 
                 margin: 18px 8px;
                 text-align: center;
-                background-color: #f1f1f1;
 
-                .border-radius(5px);
-                overflow: hidden;
-
-                .size(98px, 130px);                 
+                .image {
+                    background-color: #f1f1f1;
+                    .size(98px, 130px);
+                    .background-image();
+                }
             }
         }
 
@@ -468,9 +466,9 @@ body > article {
                         margin-left: -63px;                        
                         margin-top: 1px;
 
-                        img { 
-                            .square(50px, 50px);
-                            .border-radius(4px);
+                        .image { 
+                            .square(50px); 
+                            .background-image(5px);
                         }
                     }
 
@@ -495,8 +493,6 @@ body > article {
 
                             position: relative;
 
-                            img { .border-radius(4px); }
-
                             &.link {                                
                                 .clearfix();
 
@@ -508,8 +504,20 @@ body > article {
                                 }
                             }
                             
-                            // Display multiple photos in rov
-                            &.photo, &.video { display: inline; }
+                            // Display multiple photos in row
+                            &.photo, &.video, &.posted_photo, &.app { 
+                                display: inline-block; 
+                                margin-right: 5px; 
+                                margin-top: 5px;
+
+                                .image { 
+                                    .background-image(); 
+                                    display: inline-block;
+                                    
+                                    // we need hidden image to strech block
+                                    img { visibility: hidden; margin-bottom: -3px;}
+                                }
+                            }
                         }
                     }
 
@@ -628,15 +636,13 @@ body > article {
                 float: left;                
 
                 margin: 18px 8px;
-                text-align: center;
-                background-color: #f1f1f1;
+                text-align: center;         
 
-                .border-radius(3px);
-                overflow: hidden;
-
-                .size(98px, 130px);
-
-                img { .border-radius(3px); }
+                .image {
+                    background-color: #f1f1f1;
+                    .size(98px, 130px);
+                    .background-image();
+                }
             }
         }
     }
@@ -677,7 +683,7 @@ body > article {
         }
     }
 
-    .close { right: 32px; }
+    .close { right: 32px; top: 65px; }
     .back { 
         left: 32px; 
         
@@ -716,6 +722,7 @@ body > article {
 
         .text {
             display: inline-block;
+            width: 80%;
         }
 
         .count {

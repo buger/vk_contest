@@ -488,11 +488,12 @@ body > article aside .profile_image {
   width: 200px;
   min-height: 100px;
   text-align: center;
+  border-radius: 5px;
+  background-repeat: no-repeat;
+  background-position: top center;
 }
 body > article aside .profile_image img {
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
+  visibility: hidden;
 }
 body > article aside .profile_image + nav {
   border-top: none;
@@ -540,12 +541,12 @@ body > article aside > nav .user_list a, body > article aside .friends .user_lis
 body > article aside > nav .user_list a:hover, body > article aside .friends .user_list a:hover, body > article aside .followers .user_list a:hover {
   color: #405165;
 }
-body > article aside > nav .user_list a img, body > article aside .friends .user_list a img, body > article aside .followers .user_list a img {
+body > article aside > nav .user_list a .image, body > article aside .friends .user_list a .image, body > article aside .followers .user_list a .image {
   height: 50px;
   width: 50px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
   border-radius: 5px;
+  background-repeat: no-repeat;
+  background-position: top center;
 }
 body > article aside > nav .user_list a span, body > article aside .friends .user_list a span, body > article aside .followers .user_list a span {
   display: block;
@@ -563,7 +564,6 @@ body > article aside > nav .active {
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
   -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
@@ -681,13 +681,14 @@ body > article .profile .images li {
   float: left;
   margin: 18px 8px;
   text-align: center;
+}
+body > article .profile .images li .image {
   background-color: #f1f1f1;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  overflow: hidden;
   height: 98px;
   width: 130px;
+  border-radius: 4px;
+  background-repeat: no-repeat;
+  background-position: top center;
 }
 body > article .profile .new_message {
   padding: 10px 12px;
@@ -777,12 +778,12 @@ body > article .profile .wall .post article .user_image {
   margin-left: -63px;
   margin-top: 1px;
 }
-body > article .profile .wall .post article .user_image img {
+body > article .profile .wall .post article .user_image .image {
   height: 50px;
   width: 50px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
+  border-radius: 5px;
+  background-repeat: no-repeat;
+  background-position: top center;
 }
 body > article .profile .wall .post article .author {
   font-family: tahoma, verdana, arial, sans-serif;
@@ -802,11 +803,6 @@ body > article .profile .wall .post article .attachments li {
   font-size: 13px;
   position: relative;
 }
-body > article .profile .wall .post article .attachments li img {
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-}
 body > article .profile .wall .post article .attachments li.link {
   zoom: 1;
 }
@@ -824,8 +820,29 @@ body > article .profile .wall .post article .attachments li.link img {
   margin-right: 10px;
   max-height: 80px;
 }
-body > article .profile .wall .post article .attachments li.photo, body > article .profile .wall .post article .attachments li.video {
-  display: inline;
+body > article .profile .wall .post article .attachments li.photo,
+body > article .profile .wall .post article .attachments li.video,
+body > article .profile .wall .post article .attachments li.posted_photo,
+body > article .profile .wall .post article .attachments li.app {
+  display: inline-block;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+body > article .profile .wall .post article .attachments li.photo .image,
+body > article .profile .wall .post article .attachments li.video .image,
+body > article .profile .wall .post article .attachments li.posted_photo .image,
+body > article .profile .wall .post article .attachments li.app .image {
+  border-radius: 4px;
+  background-repeat: no-repeat;
+  background-position: top center;
+  display: inline-block;
+}
+body > article .profile .wall .post article .attachments li.photo .image img,
+body > article .profile .wall .post article .attachments li.video .image img,
+body > article .profile .wall .post article .attachments li.posted_photo .image img,
+body > article .profile .wall .post article .attachments li.app .image img {
+  visibility: hidden;
+  margin-bottom: -3px;
 }
 body > article .profile .wall .post article .info {
   margin-top: 2px;
@@ -954,18 +971,14 @@ body > article .photos .images li {
   float: left;
   margin: 18px 8px;
   text-align: center;
+}
+body > article .photos .images li .image {
   background-color: #f1f1f1;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  overflow: hidden;
   height: 98px;
   width: 130px;
-}
-body > article .photos .images li img {
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+  border-radius: 4px;
+  background-repeat: no-repeat;
+  background-position: top center;
 }
 .lightbox {
   position: fixed;
@@ -1003,6 +1016,7 @@ body > article .photos .images li img {
 }
 .lightbox .close {
   right: 32px;
+  top: 65px;
 }
 .lightbox .back {
   left: 32px;
@@ -1036,6 +1050,7 @@ body > article .photos .images li img {
 }
 .lightbox .info .text {
   display: inline-block;
+  width: 80%;
 }
 .lightbox .info .count {
   float: right;
