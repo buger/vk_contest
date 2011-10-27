@@ -87,7 +87,7 @@
 
 		APP_ID: 2652054,
 		SETTINGS: "notify,friends,photos,audio,video,docs,notes,pages,wall,groups",
-		REDIRECT_URI: "http://buger.github.com/vk_contest",
+		REDIRECT_URI: "http://buger.github.com/vk_contest/",
 		DISPLAY: "popup",
 
 		SESSION: store.get('session') || {},		
