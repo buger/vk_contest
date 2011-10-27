@@ -888,7 +888,8 @@
 			if ('replaceState' in wnd.history)
 				wnd.history.replaceState({},"","");
 
-			VK.SESSION = store.get('session');			
+			VK.SESSION = store.get('session');
+			$('#login_button').hide();
 
 			this.navigate("/user/" + VK.SESSION.user_id, true);
 		},
