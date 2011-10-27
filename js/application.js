@@ -342,14 +342,14 @@
 				},
 
 				'formated_date': function(){
-					var date = new Date(this.date*1000);
-					var today = new Date();
+					var date = new Date(this.date*1000);					
+					var today = new Date();					
 
 					var is_today = today.getYear()  === date.getYear()  &&
 					               today.getMonth() === date.getMonth() &&
-					               today.getDay()   === date.getDay();
+					               today.getDate()   === date.getDate();
 
-					var prefix = is_today ? 'today' : dateMonths[date.getMonth()] + " " + date.getDay();
+					var prefix = is_today ? 'today' : dateMonths[date.getMonth()] + " " + date.getDate();
 
 					return prefix + " at " + formatTime(date)
 				},				
