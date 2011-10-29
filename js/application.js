@@ -639,11 +639,11 @@
 				{ name:'Audio files', count:counters.audios}
 			];			
 
-			if (VK.SESSION.user_id === user.id)
-				navigation.splice(0, 0, { name: 'News', count:counters.news });
-
 			// Remove items with zero count
 			navigation = _.reject(navigation, function(i){ return !i.count });
+
+			if (VK.SESSION.user_id === user.id)
+				navigation.splice(0, 0, { name: 'News', count:counters.news||0 });
 
 			var view = {
 				'navigation': navigation,
