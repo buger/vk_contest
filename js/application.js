@@ -5,9 +5,10 @@
 		Util functions
 	*/
 
+	var debug = true;
 
 	// console object fix 
-	if (!wnd.console) {
+	if (!wnd.console || !debug) {
 		wnd.console = {};
 
 		var methods = ['log', 'debug', 'info', 'warn', 'error', 'assert', 'dir', 'dirxml', 'group', 'groupEnd', 'time', 'timeEnd', 'count', 'trace', 'profile', 'profileEnd'];
@@ -116,6 +117,7 @@
 					VK.SESSION = null;
 					store.remove('session');
 					wnd.document.body.className = "not_logged";
+					$('#login_button').show();
 											
 					return;
 				}
@@ -662,7 +664,7 @@
 				'show_followers': !!(user.followers && user.followers.length),
 			};
 
-			output = $.mustache(this.template, view)			
+			output = $.mustache(this.template, view);
 
 			$('article aside').html(output);			
 		}
@@ -916,7 +918,7 @@
 				callback(user);
 			} else {
 				App.content.renderProfile(user);
-				App.sidebar.render(user);										
+				App.sidebar.render(user);	
 			}
 		},
 
